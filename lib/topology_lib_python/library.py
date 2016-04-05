@@ -68,5 +68,5 @@ class Shell:
         return response
 
 __all__ = [
-    'CLI'
+    'Shell'
 ]
