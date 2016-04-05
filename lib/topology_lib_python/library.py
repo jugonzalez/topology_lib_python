@@ -47,7 +47,7 @@ class Shell:
         """
         self.enode.get_shell('bash').send_command('python', matches=self.prompt)
         self.enode.get_shell('bash').send_command('import sys', matches=self.prompt)
-        self.enode.get_shell('bash').send_command('sys.path.append(".")', matches=self.prompt)
+        self.enode.get_shell('bash').send_command('sys.path.append("/tmp")', matches=self.prompt)
         return self
 
     def __exit__(self, type, value, traceback):
