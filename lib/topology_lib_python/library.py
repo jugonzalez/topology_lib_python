@@ -57,7 +57,7 @@ class Shell:
         self.enode.get_shell('bash').send_command('exit()')
 
     
-    def send_cmd(self, command):
+    def cmd(self, command):
         """
         Send instructions to remote python command line
         :param command: instruction to execute remotely
