@@ -16,7 +16,7 @@
 # under the License.
 
 """
-topology_lib_scapy communication library implementation.
+topology_lib_python communication library implementation.
 """
 
 from __future__ import unicode_literals, absolute_import
@@ -34,7 +34,7 @@ class Shell:
             with Shell() as ctx:
                 ctx.send_cmd(command)
 
-        This way a scapy shell will be opened at the beggining and closed at the end.
+        This way a Python shell will be opened at the beginning and closed at the end.
         
         """
     def __init__(self, enode):
@@ -43,7 +43,7 @@ class Shell:
 
     def __enter__(self):
         """
-        Prepare context opening a scapy shell
+        Prepare context opening a python shell
         """
         self.enode.get_shell('bash').send_command('python', matches=self.prompt)
         self.enode.get_shell('bash').send_command('import sys', matches=self.prompt)
@@ -52,14 +52,14 @@ class Shell:
 
     def __exit__(self, type, value, traceback):
         """
-        Close scapy shell
+        Close python shell
         """
         self.enode.get_shell('bash').send_command('exit()')
 
     
     def send_cmd(self, command):
         """
-        Send instructions to remote scapy command line
+        Send instructions to remote python command line
         :param command: instruction to execute remotely
         :type command: string"
         """
