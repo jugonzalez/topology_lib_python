@@ -32,29 +32,34 @@ class Shell:
 
         ::
             with Shell() as ctx:
-                ctx.send_cmd(command)
+                ctx.cmd(command)
 
         This way a Python shell will be opened at the beginning and closed at the end.
         
         """
-    def __init__(self, enode):
+    def __init__(self, enode, shell=None):
         self.enode = enode
         self.prompt = '>>> '
+
+        if shell is None:
+            shell = 'bash'
+
+        self.shell = shell
 
     def __enter__(self):
         """
         Prepare context opening a python shell
         """
-        self.enode.get_shell('bash').send_command('python', matches=self.prompt)
-        self.enode.get_shell('bash').send_command('import sys', matches=self.prompt)
-        self.enode.get_shell('bash').send_command('sys.path.append("/tmp")', matches=self.prompt)
+        self.enode.get_shell(self.shell).send_command('python', matches=self.prompt)
+        self.enode.get_shell(self.shell).send_command('import sys', matches=self.prompt)
+        self.enode.get_shell(self.shell).send_command('sys.path.append("/tmp")', matches=self.prompt)
         return self
 
     def __exit__(self, type, value, traceback):
         """
         Close python shell
         """
-        self.enode.get_shell('bash').send_command('exit()')
+        self.enode.get_shell(self.shell).send_command('exit()')
 
     
     def cmd(self, command):
@@ -63,8 +68,8 @@ class Shell:
         :param command: instruction to execute remotely
         :type command: string"
         """
-        self.enode.get_shell('bash').send_command(command, matches=self.prompt)
-        response = self.enode.get_shell('bash').get_response()
+        self.enode.get_shell(self.shell).send_command(command, matches=self.prompt)
+        response = self.enode.get_shell(self.shell).get_response()
         return response
 
 __all__ = [
